@@ -12,11 +12,15 @@ class ImageFinder {
 		List<File> fileList = []
 		
 		File baseDir = new File('.')
+		println "baseDir: ${baseDir.getAbsolutePath()}"
 		baseDir.eachFileRecurse(FILES) {f ->
 			if (f.name.startsWith('IMG_') && f.name.endsWith(fileExtension.toUpperCase())) {
 				fileList << f
 			}
 		}
+		println "${fileList.size()} $fileExtension files found."
+		println ''
+		
 		return fileList
 	}
 }
