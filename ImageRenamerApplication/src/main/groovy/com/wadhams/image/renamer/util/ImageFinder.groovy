@@ -4,17 +4,30 @@
 package com.wadhams.image.renamer.util
 
 import com.wadhams.image.renamer.app.MainApp
+import com.wadhams.image.renamer.type.FileExtension
 
 import static groovy.io.FileType.FILES
 
+import java.util.regex.Pattern
+
 class ImageFinder {
-	List<File> findImages(String fileExtension) {
+	Pattern extensionPattern = ~/.*\.(\w{3,4})$/
+	
+	List<File> findImages(FileExtension fileExtension) {
 		List<File> fileList = []
 		
 		File baseDir = new File('.')
 		println "baseDir: ${baseDir.getAbsolutePath()}"
 		baseDir.eachFileRecurse(FILES) {f ->
-			if (f.name.startsWith('IMG_') && f.name.endsWith(fileExtension.toUpperCase())) {
+			String extension = ''
+			def m = f.name =~ extensionPattern
+			if (m) {
+				println m[0]
+				println m[0][1]
+				extension = m[0][1]
+			}
+	
+			if (f.name.startsWith('IMG_') && FileExtension.findByExtension(extension) == fileExtension) {
 				fileList << f
 			}
 		}

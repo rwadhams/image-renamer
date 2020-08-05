@@ -4,16 +4,18 @@
 package com.wadhams.image.renamer.util
 
 import com.wadhams.image.renamer.app.MainApp
+import com.wadhams.image.renamer.type.FileExtension
 
 import static groovy.io.FileType.FILES
 import com.drew.imaging.ImageMetadataReader
 import com.drew.metadata.Metadata
 import com.drew.metadata.exif.ExifSubIFDDirectory
 import com.drew.metadata.mov.QuickTimeDirectory
+import com.drew.metadata.mov.metadata.QuickTimeMetadataDirectory
 import com.drew.imaging.ImageProcessingException
 
 class ImageMetadata {
-	Date findCreationDate(File f) {
+	Date findCreationDate(File f, FileExtension fileExtension) {
 		Metadata metadata
 		try {
 			metadata = ImageMetadataReader.readMetadata(f)
@@ -31,13 +33,13 @@ class ImageMetadata {
 //		}
 		
 		Date creationDate
-		if (f.name.endsWith('.JPG')) {
+		if (fileExtension == FileExtension.JPG) {
 			ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class)
 			creationDate = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL, TimeZone.getDefault())
 		}
-		else if (f.name.endsWith('.MOV')) {
-			QuickTimeDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeDirectory.class)
-			creationDate = directory.getDate(QuickTimeDirectory.TAG_CREATION_TIME, TimeZone.getDefault())
+		else if (fileExtension == FileExtension.MOV) {
+			QuickTimeMetadataDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeMetadataDirectory.class)
+			creationDate = directory.getDate(QuickTimeMetadataDirectory.TAG_CREATION_DATE, TimeZone.getDefault())
 		}
 		else {
 			println "Unable to find creation date for: ${f.absolutePath}"
