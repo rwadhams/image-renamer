@@ -41,6 +41,10 @@ class ImageMetadata {
 			QuickTimeMetadataDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeMetadataDirectory.class)
 			creationDate = directory.getDate(QuickTimeMetadataDirectory.TAG_CREATION_DATE, TimeZone.getDefault())
 		}
+		else if (fileExtension == FileExtension.HEIC) {
+			ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class)
+			creationDate = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL, TimeZone.getDefault())
+		}
 		else {
 			println "Unable to find creation date for: ${f.absolutePath}"
 			println ''

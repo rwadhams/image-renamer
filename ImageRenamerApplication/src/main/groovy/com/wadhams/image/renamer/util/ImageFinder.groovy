@@ -22,8 +22,8 @@ class ImageFinder {
 			String extension = ''
 			def m = f.name =~ extensionPattern
 			if (m) {
-				println m[0]
-				println m[0][1]
+				//println m[0]
+				//println m[0][1]
 				extension = m[0][1]
 			}
 	

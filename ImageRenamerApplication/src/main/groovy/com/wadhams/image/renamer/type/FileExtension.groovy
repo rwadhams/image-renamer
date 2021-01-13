@@ -3,6 +3,7 @@ package com.wadhams.image.renamer.type
 enum FileExtension {
 	JPG(['JPG','JPEG']),
 	MOV(['MOV']),
+	HEIC(['HEIC']),
 	Unknown(['Unknown']);
 	
 	private static EnumSet<FileExtension> allEnums = EnumSet.allOf(FileExtension.class)
