@@ -27,6 +27,17 @@ class ImageRenamerService {
 		//HEIC
 		fileList = imageFinder.findImages(FileExtension.HEIC)
 		renameFiles(fileList, FileExtension.HEIC)
+		
+		reportNameOfOldestImageFile()
+	}
+
+	def reportNameOfOldestImageFile() {
+		String oldestImageFilename = imageFinder.findOldestImageFilename()
+		
+		File report = new File('oldest_image_filename.txt')
+		report.withPrintWriter {pw ->
+			pw.println oldestImageFilename
+		}
 	}
 
 	def renameFiles(List<File> fileList, FileExtension fileExtension) {

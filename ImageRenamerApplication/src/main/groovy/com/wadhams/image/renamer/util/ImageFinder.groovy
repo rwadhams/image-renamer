@@ -12,6 +12,7 @@ import java.util.regex.Pattern
 
 class ImageFinder {
 	Pattern extensionPattern = ~/.*\.(\w{3,4})$/
+	Pattern datedFilenamePattern = ~/\d{8}_\d{6}.*/
 	
 	List<File> findImages(FileExtension fileExtension) {
 		List<File> fileList = []
@@ -35,5 +36,22 @@ class ImageFinder {
 		println ''
 		
 		return fileList
+	}
+	
+	String findOldestImageFilename() {
+		File baseDir = new File('C:\\Grey_Nomad_Media\\Image_Files')	//BAD!!!
+		String oldestImageFilename = ''
+		File oldestImageFile
+		baseDir.eachFileRecurse(FILES) {f ->
+			def m = f.name =~ datedFilenamePattern
+			if (m) {
+				//println m[0]
+				if (f.name > oldestImageFilename) {
+					oldestImageFilename = f.name
+					oldestImageFile = f
+				}
+			}
+		}
+		return oldestImageFile.getAbsolutePath()
 	}
 }
