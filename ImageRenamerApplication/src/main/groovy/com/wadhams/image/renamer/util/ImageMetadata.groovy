@@ -38,8 +38,10 @@ class ImageMetadata {
 			creationDate = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL, TimeZone.getDefault())
 		}
 		else if (fileExtension == FileExtension.MOV) {
-			QuickTimeMetadataDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeMetadataDirectory.class)
-			creationDate = directory.getDate(QuickTimeMetadataDirectory.TAG_CREATION_DATE, TimeZone.getDefault())
+//			QuickTimeMetadataDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeMetadataDirectory.class)
+//			creationDate = directory.getDate(QuickTimeMetadataDirectory.TAG_CREATION_DATE, TimeZone.getDefault())
+			QuickTimeDirectory directory = metadata.getFirstDirectoryOfType(QuickTimeDirectory.class)
+			creationDate = directory.getDate(QuickTimeDirectory.TAG_CREATION_TIME, TimeZone.getDefault())
 		}
 		else if (fileExtension == FileExtension.HEIC) {
 			ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class)
