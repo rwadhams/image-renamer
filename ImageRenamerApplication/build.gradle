@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.drewnoakes:metadata-extractor:2.14.0'
+	implementation 'com.drewnoakes:metadata-extractor:2.14.0'
 	
 	// Use the latest Groovy version for building this library
 	implementation 'org.codehaus.groovy:groovy-all:3.0.9'
